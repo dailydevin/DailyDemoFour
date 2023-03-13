@@ -4,11 +4,16 @@ import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ToggleButton
 import co.daily.CallClient
 import co.daily.CallClientListener
 import co.daily.model.CallState
 import co.daily.model.Participant
+import co.daily.settings.Disable
+import co.daily.settings.Enable
+import co.daily.settings.InputSettingsUpdate
 import co.daily.view.VideoView
 
 class MainActivity : AppCompatActivity() {
@@ -39,12 +44,15 @@ class MainActivity : AppCompatActivity() {
 
                 val layout = findViewById<LinearLayout>(R.id.linearLayout)
 
-//                var params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
-//                videoView.layoutParams = params
+                var params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+                )
+                videoView.layoutParams = params
 
-                layout.addView(videoView)
+//                layout.addView(videoView)
 
-//                videoView.track = participant.media?.camera?.track
+                videoView.track = participant.media?.camera?.track
             }
 
             // Handle a participant updating (e.g. their tracks changing)
@@ -64,5 +72,48 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<Button>(R.id.leave).setOnClickListener {
+            Log.d("BUTTONS", "User tapped the Leave button")
+            call.leave() {
+                // Returns CallState.left
+                call.callState()
+            }
+        }
+
+        findViewById<ToggleButton>(R.id.audio).setOnCheckedChangeListener { _, isChecked ->
+            Log.d("BUTTONS", "User tapped the Mute button")
+
+            if(isChecked) {
+                call.updateInputs(
+                    InputSettingsUpdate(
+                        microphone = Disable(),
+                    )
+                )
+            } else {
+                call.updateInputs(
+                    InputSettingsUpdate(
+                        microphone = Enable(),
+                    )
+                )
+            }
+        }
+
+        findViewById<ToggleButton>(R.id.cam).setOnCheckedChangeListener { _, isChecked ->
+            Log.d("BUTTONS", "User tapped the Cam button")
+
+            if(isChecked) {
+                call.updateInputs(
+                    InputSettingsUpdate(
+                        camera = Disable(),
+                    )
+                )
+            } else {
+                call.updateInputs(
+                    InputSettingsUpdate(
+                        camera = Enable(),
+                    )
+                )
+            }
+        }
     }
 }
