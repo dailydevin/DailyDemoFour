@@ -1,12 +1,12 @@
 package com.example.dailydemofour
 
 import android.content.ContentValues.TAG
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ToggleButton
+import androidx.appcompat.app.AppCompatActivity
 import co.daily.CallClient
 import co.daily.CallClientListener
 import co.daily.model.CallState
@@ -16,9 +16,11 @@ import co.daily.settings.Enable
 import co.daily.settings.InputSettingsUpdate
 import co.daily.view.VideoView
 
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         // Create call client
@@ -40,17 +42,22 @@ class MainActivity : AppCompatActivity() {
             override fun onParticipantJoined(participant: Participant) {
                 Log.d(TAG, "Participant ${participant.id} joined the call!")
                 val videoView = VideoView(applicationContext)
-                videoViews.put(participant.id.toString(), videoView)
+                videoViews[participant.id.toString()] = videoView
 
-                val layout = findViewById<LinearLayout>(R.id.linearLayout)
-
-                var params = LinearLayout.LayoutParams(
+                val lp = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT
+                    LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-                videoView.layoutParams = params
+                lp.setMargins(20, 20, 20, 20)
+                //lp.height = 400
+                //lp.width = 200
+                videoView.layoutParams = lp
 
-//                layout.addView(videoView)
+                val layout = findViewById<LinearLayout>(R.id.videoLinearLayout)
+
+                layout.addView(videoView)
+                layout.invalidate()
+                layout.requestLayout()
 
                 videoView.track = participant.media?.camera?.track
             }

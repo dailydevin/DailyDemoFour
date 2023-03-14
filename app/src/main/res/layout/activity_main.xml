@@ -1,55 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tableLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ToggleButton
+        android:id="@+id/cam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="ToggleButton"
+        app:layout_constraintEnd_toStartOf="@+id/audio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ToggleButton
-            android:id="@+id/cam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ToggleButton" />
+    <ToggleButton
+        android:id="@+id/audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="ToggleButton"
+        app:layout_constraintEnd_toStartOf="@+id/leave"
+        app:layout_constraintStart_toEndOf="@+id/cam"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ToggleButton
-            android:id="@+id/audio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ToggleButton" />
+    <Button
+        android:id="@+id/leave"
 
-        <Button
-            android:id="@+id/leave"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Leave Call" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Leave Call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/audio"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </TableRow>
+    <LinearLayout
+        android:id="@+id/videoLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#980E0E"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cam"/>
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/button6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-        </LinearLayout>
-    </TableRow>
-
-</TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
