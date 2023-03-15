@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import co.daily.CallClient
 import co.daily.CallClientListener
 import co.daily.model.CallState
+import co.daily.model.OutboundMediaType
 import co.daily.model.Participant
 import co.daily.settings.Disable
 import co.daily.settings.Enable
@@ -44,20 +45,17 @@ class MainActivity : AppCompatActivity() {
                 val videoView = VideoView(applicationContext)
                 videoViews[participant.id.toString()] = videoView
 
-                val lp = LinearLayout.LayoutParams(
+                val videoLayoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-                lp.setMargins(20, 20, 20, 20)
-                //lp.height = 400
-                //lp.width = 200
-                videoView.layoutParams = lp
+                videoLayoutParams.setMargins(20, 20, 20, 20)
+                videoLayoutParams.height = 500
+                videoView.layoutParams = videoLayoutParams
 
                 val layout = findViewById<LinearLayout>(R.id.videoLinearLayout)
 
                 layout.addView(videoView)
-                layout.invalidate()
-                layout.requestLayout()
 
                 videoView.track = participant.media?.camera?.track
             }
@@ -82,45 +80,17 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.leave).setOnClickListener {
             Log.d("BUTTONS", "User tapped the Leave button")
             call.leave() {
-                // Returns CallState.left
-                call.callState()
             }
         }
 
-        findViewById<ToggleButton>(R.id.audio).setOnCheckedChangeListener { _, isChecked ->
+        findViewById<ToggleButton>(R.id.toggleMicrophone).setOnCheckedChangeListener { _, isChecked ->
             Log.d("BUTTONS", "User tapped the Mute button")
-
-            if(isChecked) {
-                call.updateInputs(
-                    InputSettingsUpdate(
-                        microphone = Disable(),
-                    )
-                )
-            } else {
-                call.updateInputs(
-                    InputSettingsUpdate(
-                        microphone = Enable(),
-                    )
-                )
-            }
+            call?.setInputEnabled(OutboundMediaType.Microphone, isChecked)
         }
 
-        findViewById<ToggleButton>(R.id.cam).setOnCheckedChangeListener { _, isChecked ->
+        findViewById<ToggleButton>(R.id.toggleCamera).setOnCheckedChangeListener { _, isChecked ->
             Log.d("BUTTONS", "User tapped the Cam button")
-
-            if(isChecked) {
-                call.updateInputs(
-                    InputSettingsUpdate(
-                        camera = Disable(),
-                    )
-                )
-            } else {
-                call.updateInputs(
-                    InputSettingsUpdate(
-                        camera = Enable(),
-                    )
-                )
-            }
+            call?.setInputEnabled(OutboundMediaType.Camera, isChecked)
         }
     }
 }

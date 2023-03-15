@@ -5,23 +5,29 @@
     android:layout_height="match_parent">
 
     <ToggleButton
-        android:id="@+id/cam"
+        android:id="@+id/toggleCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:checked="true"
         android:text="ToggleButton"
-        app:layout_constraintEnd_toStartOf="@+id/audio"
+        android:textOff="Cam Off"
+        android:textOn="Cam On"
+        app:layout_constraintEnd_toStartOf="@+id/toggleMicrophone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ToggleButton
-        android:id="@+id/audio"
+        android:id="@+id/toggleMicrophone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:checked="false"
         android:text="ToggleButton"
+        android:textOff="Muted"
+        android:textOn="Unmuted"
         app:layout_constraintEnd_toStartOf="@+id/leave"
-        app:layout_constraintStart_toEndOf="@+id/cam"
+        app:layout_constraintStart_toEndOf="@+id/toggleCamera"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -32,7 +38,7 @@
         android:layout_marginTop="16dp"
         android:text="Leave Call"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/audio"
+        app:layout_constraintStart_toEndOf="@+id/toggleMicrophone"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -48,6 +54,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cam"/>
+        app:layout_constraintTop_toBottomOf="@+id/toggleCamera"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
